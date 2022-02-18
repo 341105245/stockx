@@ -1,0 +1,76 @@
+#include <cs50.h>
+#include <ctype.h>
+#include <stdio.h>
+#include <string.h>
+#include <unistd.h>
+#include <stdlib.h>
+
+
+
+int main(void) {
+    char imgStart[] = "https://images.stockx.com/images/";
+    char imgEnd[] = "-Product.jpg";
+    char stockxLink[111];
+        strcpy(stockxLink, get_string("\e[1;37m\e[4;37mInsert StockX Link:\e[0m\n"));
+        memcpy(stockxLink+0,stockxLink+19,100);
+char * pchIIII;
+    pchIIII = strstr (stockxLink,"adidas");
+char * pchIIIII;
+    pchIIIII = strstr (stockxLink, "jordan");
+char * pchIIIIII;
+    pchIIIIII = strstr (stockxLink,"nike");
+int i;
+for(i=0; stockxLink[i]!='\0'; i++)
+	{
+		//check first character is lowercase alphabet
+		if(i==0)
+		{
+            if (pchIIII != NULL)
+			    continue; //continue to the loop
+            if (pchIIIII || pchIIIIII  != NULL)
+                if((stockxLink[i]>='a' && stockxLink[i]<='z'))
+				    stockxLink[i]=stockxLink[i]-32; //subtract 32 to make it capital
+                    continue; //continue to the loop
+		}
+		if(stockxLink[i]=='-')//check space
+		{
+			//if space is found, check next character
+			++i;
+			//check next character is lowercase alphabet
+			if(stockxLink[i]>='a' && stockxLink[i]<='z')
+			{
+				stockxLink[i]=stockxLink[i]-32; //subtract 32 to make it capital
+				continue; //continue to the loop
+			}
+		}
+		else
+		{
+			//all other uppercase characters should be in lowercase
+			if(stockxLink[i]>='A' && stockxLink[i]<='Z')
+				stockxLink[i]=stockxLink[i]+32; //subtract 32 to make it small/lowercase
+		}
+	}
+char x[100];
+    strcpy(x, imgStart); strcat(x, stockxLink); strcat(x, imgEnd);
+
+char * pch;
+pch = strstr (x,"Qntm");
+    if (pch != NULL)
+        strncpy (pch,"QNTM",4);
+char * pchI;
+pchI = strstr (x,"Rnnr");
+    if (pchI != NULL)
+        strncpy (pchI,"RNNR",4);
+char * pchII;
+pchII = strstr (x,"Og");
+    if (pchII != NULL)
+        strncpy (pchII,"OG",2);
+char * pchIII;
+pchIII = strstr (x,"Sb");
+    if (pchIII != NULL)
+        strncpy (pchIII,"SB",2);
+printf("\n\e[4;34m");
+puts (x);
+printf("\n\e[0m");
+return 0;
+}
